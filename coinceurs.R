@@ -25,6 +25,18 @@ df <- data.frame(
     reduc = TRUE
 )
 
+al <- data.frame(
+    couleur = c("green", "red", "gold", "blue", "gray", "violet"), # df colors
+    # couleur = c("black", "blue", "green", "gold", "gray", "red"), # true colors
+    min = c(8, 10, 13, 15, 17, 20),
+    max = c(14, 17, 22, 25, 30, 33),
+    weight = c(46, 48, 52, 58, 59, 61),
+    kn = c(5, 6, 7, 10, 10, 10),
+    price = 64.9,
+    type = "alien revo short",
+    reduc = TRUE
+)
+
 wc <- data.frame(
     couleur = c("hotpink", "green", "red", "gold", "blue", "gray"),
     min = c(20.6, 25.8, 31.7, 41.5, 52.7, 66.8),
@@ -33,6 +45,17 @@ wc <- data.frame(
     kn = 10,
     price = c(74.9, 74.9, 79.9, 84.9, 84.9, 89.9),
     type = "wildcountry",
+    reduc = TRUE
+)
+
+wc0 <- data.frame(
+    couleur = c("red", "gold", "blue", "gray", "violet", "green"),
+    min = c(8.5, 10.4, 13.8, 15.8, 20.2, 25.4),
+    max = c(13.2, 15.7, 22.3, 25.9, 32.9, 40.1),
+    weight = c(51, 58.1, 68.6, 70.6, 76.9, 82.6),
+    kn = c(5, 6, 9, 9, 9, 9),
+    price = c(79.9, 79.9, 79.9, 84.9, 84.9, 84.9),
+    type = "wildcountry zero",
     reduc = TRUE
 )
 
@@ -60,11 +83,13 @@ hl <- data.frame(
 )
 
 
-coinceurs <- rbind(d, df, hl, wc, c4) %>% as_tibble() %>%
+coinceurs <- rbind(d, df, wc, wc0, c4, hl) %>% as_tibble() %>%
     mutate(
         type = as.factor(type), mid = (min + max)/2,
         couleur = factor(couleur,
-                         levels = c("blue", "gray", "violet", "hotpink", "green", "red", "gold" )))
+                         levels = c("blue", "gray", "violet", "hotpink", "green", "red", "gold" ))) %>%
+    mutate()
+
 
 
 library(dplyr)
@@ -77,9 +102,25 @@ coinceurs %>%
                    position = position_dodge2(width = 0.6)) +
     geom_point(aes(y = price*ifelse(reduc, 0.82, 1)),
                position = position_dodge2(width= 0.6), shape = 4) +
+    geom_point(aes(y = price*ifelse(reduc, 0.82, 1)),
+               size = 2, fill = "black", pch = 21,
+               position = position_dodge2(width= 0.6)) +
     scale_colour_identity() +
     scale_y_continuous(
         name = "Size (mm)",
+        sec.axis = sec_axis(trans=~.*1, name="Price")
+    ) +
+    NULL
+
+coinceurs %>%
+    ggplot(aes(x = type, size = kn/10, color = couleur)) +
+    geom_linerange(aes(ymin = min, ymax = max),
+                   position = position_dodge2(width = 0.6)) +
+    geom_point(aes(y = weight),
+               position = position_dodge2(width= 0.6), shape = 4) +
+    scale_colour_identity() +
+    scale_y_continuous(
+        name = "Weight (mm)",
         sec.axis = sec_axis(trans=~.*1, name="Price")
     ) +
     NULL
@@ -88,6 +129,22 @@ coinceurs %>%
 # Wanted
 coinceurs %>%
     filter(type %in% c("dragon", "dragonfly")) %>%
+    # filter(type %in% c("camalot c4")) %>%
+    # filter(type %in% c("dragonfly")) %>%
     group_by(type) %>%
-    filter(min < 60) %>%
+    filter(max < 90) %>%
     mutate(price = price * 0.82) %>% summarise(total = sum(price))
+
+
+## Nuts ####
+
+wn <- data.frame(
+    couleur = c("violet", "green", "gray", "gold", "blue", "red", "black", "lightblue", "gray", "green"),
+    min = c(7, 8, 9, 11, 13, 16, 18, 21, 24, 28),
+    max = c(15, 15, 16, 16, 18, 23, 26, 27, 33, 34),
+    weight = c(16, 26, 28, 30, 34, 40, 42, 48, 62, 76),
+    kn =    c(7.5, 13, 13, 13, 13, 13, 13, 13, 13, 13),
+    price = c(11.5, 11.5, 11.5, 11.5, 11.5, 11.5, 11.5, 11.95, 11.95, 12.5),
+    type = "wallnuts",
+    reduc = TRUE
+)
