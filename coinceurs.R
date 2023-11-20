@@ -1,5 +1,6 @@
 
 # Datatest ####
+# Prices from vieux camp
 ## Friends ####
 
 d <- data.frame(
@@ -34,6 +35,18 @@ al <- data.frame(
     kn = c(5, 6, 7, 10, 10, 10),
     price = 64.9,
     type = "alien revo short",
+    reduc = TRUE
+)
+
+ax <- data.frame(
+    couleur = c("green", "red", "gold", "blue", "gray", "violet"), # df colors
+    # couleur = c("black", "blue", "green", "gold", "gray", "red"), # true colors
+    min = c(9.3, 10.8, 13.8, 16.1, 18.6, 20.3),
+    max = c(14, 16.1, 20.8, 25.7, 28, 33.4),
+    weight = c(55, 56, 64, 64, 66, 70),
+    kn = c(5, 6, 7, 9.5, 9.5, 9.5),
+    price = 79.9,
+    type = "alien x",
     reduc = TRUE
 )
 
@@ -80,6 +93,17 @@ hl <- data.frame(
     price = c(96.9, 96.9, 96.9, 99.9, 109.9, 119.9, 129.9),
     type = "camalot hl",
     reduc = FALSE
+)
+
+z4 <- data.frame(
+    couleur = c("green", "red", "gold", "blue", "gray", "violet", "green"),
+    min = c(7.5, 8.8, 10.4, 12.4, 15.3, 18.8, 23.1),
+    max = c(11.8, 13.8, 16.3, 22.6, 27.7, 33.9, 42.1),
+    weight = c(43, 45, 48, 53, 61, 77, 93),
+    kn = c(5, 5, 6, 8, 9, 10, 10),
+    price = c(84.9, 84.9, 84.9, 84.9, 89.9, 89.9, 89.9),
+    type = "camalot z4",
+    reduc = TRUE
 )
 
 
