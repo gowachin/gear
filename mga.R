@@ -20,10 +20,22 @@ c4_2 <- data.frame(
     reduc = FALSE
 )
 
+z4 <- data.frame(
+    couleur = c("green", "red", "gold", "blue", "gray", "violet", "green"),
+    min = c(7.5, 8.8, 10.4, 12.4, 15.3, 18.8, 23.1),
+    max = c(11.8, 13.8, 16.3, 22.6, 27.7, 33.9, 42.1),
+    weight = c(43, 45, 48, 53, 61, 77, 93),
+    kn = c(5, 5, 6, 8, 9, 10, 10),
+    price = c(77.9, 77.9, 77.9, 77.9, 82, 82, 82),
+    type = "camalot z4",
+    reduc = TRUE
+)
+
 
 library(dplyr)
-c4_2 %>%
-    filter(max < 90) %>%
+z4 %>%
+    # filter(max < 17) %>%
+    mutate(price = price * 0.9) %>%
     summarise(total = sum(price))
 
 528 * 0.9
