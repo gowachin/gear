@@ -73,7 +73,7 @@ c4 <- data.frame(
     max = c(23.4, 26.7, 33.5, 41.2, 52.1, 64.9, 87.9, 114.7, 148.5, 195),
     weight = c(69.8, 77.5, 93, 107.5, 123.9, 140.3, 181.1, 257.8, 348.1, 529.9),
     kn = c(9, 9, 12, 14, 14, 14, 14, 14, 14, 14),
-    number = c(1, 1, 1, 1, 1, 1, 1, 1, 0, 0),
+    number = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 0),
     type = "camalot c4"
 )
 
@@ -109,7 +109,29 @@ z4 <- data.frame(
 )
 
 
-coinceurs <- rbind(d, df, wc, wc0, oc4, c4, hl, z4) %>% as_tibble() %>%
+to <- data.frame(
+    # couleur = c("black", "blue", "gray", "violet", "green", "red", "gold")
+    couleur = c("gold", "blue", "gray", "violet", "green", "red", "gold"),
+    min = c(11.7, 13.8, 17, 20.9, 25.7, 31.6, 39.7),
+    max = c(18.9, 22.5, 27.7, 34.2, 42.3, 52.2, 64.2),
+    weight = c(69, 75, 83, 95, 109, 132, 144),
+    kn = c(6, 8, 9, 10, 13, 13, 13),
+    number = c(1, 1, 1, 1, 1, 1, 0),
+    type = "totem"
+)
+
+bn <- data.frame(
+    couleur = c("blue", "red", "gold", "green", "violet"),
+    min = c(3.7, 4.8, 6.1, 7.9, 10.3),
+    max = c(6.4, 9, 11.6, 13.8, 17.5),
+    weight = c(31, 39, 49, 58, 73),
+    kn = c(7, 8, 8, 8, 8),
+    number = c(1, 1, 1, 0, 0),
+    type = "ballnut"
+)
+
+
+coinceurs <- rbind(d, df, wc, wc0, oc4, c4, hl, z4, to, bn) %>% as_tibble() %>%
     filter(number > 0) %>%
     mutate(
         type = as.factor(type), mid = (min + max)/2,
@@ -124,8 +146,8 @@ coinceurs %>%
     ggplot(aes(x = type, size = kn/10, color = couleur)) +
     geom_linerange(aes(ymin = min, ymax = max),
                    position = position_dodge2(width = 0.6)) +
-    geom_point(aes(y = weight),
-               position = position_dodge2(width= 0.6), shape = 4) +
+    # geom_point(aes(y = weight),
+               # position = position_dodge2(width= 0.6), shape = 4) +
     scale_colour_identity() +
     scale_y_continuous(
         name = "Size (mm)",

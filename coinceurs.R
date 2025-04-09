@@ -106,6 +106,19 @@ z4 <- data.frame(
     reduc = TRUE
 )
 
+bn <- data.frame(
+    couleur = c("blue", "red", "gold", "green", "violet"),
+    min = c(3.7, 4.8, 6.1, 7.9, 10.3),
+    max = c(6.4, 9, 11.6, 13.8, 17.5),
+    weight = c(31, 39, 49, 58, 73),
+    kn = c(7, 8, 8, 8, 8),
+    number = c(1, 1, 1, 0, 0),
+    price = 67.9,
+    type = "ballnut",
+    reduc = TRUE
+)
+
+
 z4 %>%
     filter(max < 17) %>%
     mutate(price = price * 0.82) %>%
